@@ -17,14 +17,15 @@ const Basics: NextPage = () => {
       connection.getBalance(key).then(balance => {
         setBalance(balance / Web3.LAMPORTS_PER_SOL);
       });
-    } catch (error) {
-      setAddress('');
-      setBalance(0);
-      toast({
-        status: "error",
-        title: error.toString()
-      });
-    }
+      } catch (error) {
+          setAddress('');
+          setBalance(0);
+          toast({
+              status: "error",
+              title: (error as Error).message
+          });
+      }
+
   };
 
   const handleAirdrop = async () => {
@@ -40,11 +41,14 @@ const Basics: NextPage = () => {
       // Refresh balance after airdrop
       addressSubmittedHandler(address);
     } catch (error) {
-      toast({
-        status: "error",
-        title: error.toString()
-      });
-    }
+        setAddress('');
+        setBalance(0);
+        toast({
+          status: "error",
+          title: (error as Error).message
+        });
+      }
+      
   };
 
   return (
